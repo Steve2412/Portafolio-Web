@@ -45,7 +45,7 @@ export function ContactCards({ t }: { t: Dictionary['pages']['contact'] }) {
       {channels.map(({ key, Icon, label, value, href, external }) => (
         <li key={key} className="contact-card">
           <span className="contact-icon" aria-hidden="true">
-            <Icon size={20} />
+            <Icon size={17} />
           </span>
           <div className="contact-info">
             <p className="contact-label">{label}</p>

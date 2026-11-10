@@ -1,14 +1,40 @@
 import type { Locale } from '@/lib/i18n';
+import { cambiappDetails, conavencaDetails, corblasercaDetails } from '@/content/project-details';
+
+type Localized = Record<Locale, string>;
+
+/** Párrafo de texto, o una lista (numerada si `ordered`). */
+export type ContentBlock = string | { items: string[]; ordered?: boolean };
+
+export type ProjectDetails = {
+  about: ContentBlock[];
+  goal: ContentBlock[];
+  execution: ContentBlock[];
+  results: ContentBlock[];
+};
+
+export type ProjectImage = {
+  src: string;
+  caption?: Localized;
+  fit?: 'contain' | 'cover';
+};
 
 export type Project = {
+  /** También es el slug de la página de detalle: /es/proyectos/{id}. */
   id: string;
-  title: Record<Locale, string>;
-  summary: Record<Locale, string>;
+  title: Localized;
+  summary: Localized;
+  client: Localized;
+  service: Localized;
   tech: string[];
   image: string;
   imageFit?: 'contain' | 'cover';
   repository: string;
+  details: Record<Locale, ProjectDetails>;
+  /** Capturas adicionales que se muestran al final de la página de detalle. */
+  gallery?: ProjectImage[];
 };
+
 
 export const projects: Project[] = [
   {
@@ -35,6 +61,9 @@ export const projects: Project[] = [
     image: '/projects/cambiapp.png',
     imageFit: 'contain',
     repository: 'https://github.com/Steve2412/CambiApp',
+    client: { es: 'Proyecto personal', en: 'Personal project' },
+    service: { es: 'Desarrollo de aplicaciones móviles (Android)', en: 'Mobile app development (Android)' },
+    details: cambiappDetails,
   },
   {
     id: 'conavenca',
@@ -43,9 +72,12 @@ export const projects: Project[] = [
       es: 'Sistema de gestión de entregas con administración de paquetes y destinos, cálculo de tarifas, facturas PDF y seguimiento en tiempo real.',
       en: 'A delivery management system for packages and destinations, with rate calculation, PDF invoices, and real-time tracking.',
     },
-    tech: ['HTML', 'CSS', 'JavaScript', 'PHP', 'Bootstrap', 'MySQL', 'ESP32', 'A9G'],
+    tech: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'PHP', 'Bootstrap', 'MySQL', 'Leaflet', 'DomPDF', 'phpqrcode', 'ESP32', 'A9G'],
     image: '/projects/conavenca.jpg',
     repository: 'https://github.com/Steve2412/Conavenca',
+    client: { es: 'Conavenca', en: 'Conavenca' },
+    service: { es: 'Desarrollo web', en: 'Web development' },
+    details: conavencaDetails,
   },
   {
     id: 'corblaserca',
@@ -57,7 +89,21 @@ export const projects: Project[] = [
     tech: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', 'Bootstrap', 'DomPDF'],
     image: '/projects/corblaserca.jpg',
     repository: 'https://github.com/Steve2412/Corblaserca',
+    client: { es: 'Corblaserca', en: 'Corblaserca' },
+    service: { es: 'Desarrollo web', en: 'Web development' },
+    details: corblasercaDetails,
   },
 ];
 
+/** Datos que necesita una tarjeta; evita enviar los textos de detalle a componentes de cliente. */
+export type ProjectSummary = Pick<Project, 'id' | 'title' | 'summary' | 'tech' | 'image' | 'imageFit'>;
+
+export function toSummary({ id, title, summary, tech, image, imageFit }: Project): ProjectSummary {
+  return { id, title, summary, tech, image, imageFit };
+}
+
 export const latestProjects = projects.slice(0, 3);
+
+export function getProject(id: string) {
+  return projects.find((p) => p.id === id);
+}

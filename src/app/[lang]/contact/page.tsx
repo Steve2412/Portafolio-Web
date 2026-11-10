@@ -5,6 +5,7 @@ import { isLocale } from '@/lib/i18n';
 import { PageHead } from '@/components/ui/PageHead';
 import { Reveal } from '@/components/motion/Reveal';
 import { ContactCards } from '@/components/sections/ContactCards';
+import { ContactForm } from '@/components/sections/ContactForm';
 
 export default async function ContactPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -17,6 +18,10 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     <>
       <PageHead title={contact.title} lead={contact.lead} />
       <Reveal delay={0.12}>
+        <ContactForm t={contact.form} />
+      </Reveal>
+      <Reveal delay={0.16}>
+        <h2 className="contact-subtitle">{contact.otherChannels}</h2>
         <ContactCards t={contact} />
         <div className="contact-meta">
           <p className="reach-meta">

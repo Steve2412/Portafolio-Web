@@ -8,9 +8,9 @@ const links = [
   { label: 'Upwork', href: site.socials.upwork, Icon: SiUpwork },
 ];
 
-export function SocialLinks() {
+export function SocialLinks({ variant }: { variant?: 'round' } = {}) {
   return (
-    <ul className="social">
+    <ul className={variant === 'round' ? 'social social--round' : 'social'}>
       {links.map(({ label, href, Icon }) => (
         <li key={label}>
           <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>

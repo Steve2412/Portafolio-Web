@@ -45,6 +45,11 @@ export function href(locale: Locale, key: RouteKey): string {
   return '/' + parts.join('/');
 }
 
+/** URL de la página de detalle de un proyecto: projectHref('es', 'cambiapp') -> /es/proyectos/cambiapp */
+export function projectHref(locale: Locale, id: string): string {
+  return `${href(locale, 'projects')}/${id}`;
+}
+
 /** Traduce una ruta actual a su equivalente en otro idioma, conservando el resto del path. */
 export function switchLocalePath(pathname: string, to: Locale): string {
   const [, , segment, ...rest] = pathname.split('/');

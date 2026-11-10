@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import type { Locale } from '@/lib/i18n';
-import type { Project } from '@/content/projects';
+import type { ProjectSummary } from '@/content/projects';
 import { Reveal } from '@/components/motion/Reveal';
 import { ProjectCard } from '@/components/sections/ProjectCard';
 
@@ -18,7 +18,7 @@ export function ProjectsGrid({
   pageLabel,
   ofLabel,
 }: {
-  projects: Project[];
+  projects: ProjectSummary[];
   locale: Locale;
   viewLabel: string;
   paginationLabel: string;

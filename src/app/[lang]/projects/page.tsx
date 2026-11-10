@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getDictionary } from '@/dictionaries';
 import { isLocale } from '@/lib/i18n';
-import { projects } from '@/content/projects';
+import { projects, toSummary } from '@/content/projects';
 import { PageHead } from '@/components/ui/PageHead';
 import { ProjectsGrid } from '@/components/sections/ProjectsGrid';
 
@@ -14,7 +14,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ lang:
     <>
       <PageHead title={dict.pages.projects.title} lead={dict.pages.projects.lead} />
       <ProjectsGrid
-        projects={projects}
+        projects={projects.map(toSummary)}
         locale={lang}
         viewLabel={dict.ui.viewProject}
         paginationLabel={dict.ui.paginationLabel}

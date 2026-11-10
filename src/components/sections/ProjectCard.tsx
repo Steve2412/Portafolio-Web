@@ -1,13 +1,14 @@
 import Image from 'next/image';
-import type { Locale } from '@/lib/i18n';
-import type { Project } from '@/content/projects';
+import Link from 'next/link';
+import { projectHref, type Locale } from '@/lib/i18n';
+import type { ProjectSummary } from '@/content/projects';
 
 export function ProjectCard({
   project,
   locale,
   viewLabel,
 }: {
-  project: Project;
+  project: ProjectSummary;
   locale: Locale;
   viewLabel: string;
 }) {
@@ -35,14 +36,9 @@ export function ProjectCard({
             </li>
           ))}
         </ul>
-        <a
-          className="card-link"
-          href={project.repository}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <Link className="card-link" href={projectHref(locale, project.id)}>
           {viewLabel} <span aria-hidden="true">→</span>
-        </a>
+        </Link>
       </div>
     </article>
   );

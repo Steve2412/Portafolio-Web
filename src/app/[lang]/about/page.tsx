@@ -12,8 +12,15 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
   const { about } = dict.pages;
 
   return (
-    <>
-      <PageHead title={about.title} lead={about.lead} />
+    <div className="about">
+      <PageHead title={about.title} />
+      <Reveal delay={0.16}>
+        <div className="about-intro">
+          {about.intro.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+        </div>
+      </Reveal>
 
       <section className="section" aria-labelledby="edu-title">
         <Reveal>
@@ -21,10 +28,20 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             {about.education.title}
           </h2>
         </Reveal>
-        <Reveal delay={0.08} className="edu-wrap">
-          <EducationCard edu={about.education} />
-        </Reveal>
+        <ol className="edu-timeline">
+          {about.education.items.map((edu, i) => (
+            <li key={edu.id} className="tl-item">
+              <div className="tl-marker">
+                <span className="tl-year">{edu.year}</span>
+                <span className="tl-duration">{edu.duration}</span>
+              </div>
+              <Reveal delay={0.08 + i * 0.06}>
+                <EducationCard edu={edu} />
+              </Reveal>
+            </li>
+          ))}
+        </ol>
       </section>
-    </>
+    </div>
   );
 }
